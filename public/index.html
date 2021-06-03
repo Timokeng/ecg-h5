@@ -6,6 +6,34 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script>
+      (function () {
+        // 在标准 2048px 适配下，100px = 1rem;
+        var baseFontSize = 100;  
+        var baseWidth = 2048;
+  
+        var set = function () {
+          var clientWidth = document.documentElement.clientWidth || window.innerWidth;
+  
+          var rem = 100;
+          if (clientWidth != baseWidth) {
+            rem = Math.round(clientWidth / baseWidth * baseFontSize);
+          }
+  
+          document.querySelector('html').style.fontSize = rem + 'px';
+        }
+        set();
+  
+        window.addEventListener('resize', set);
+      }());
+
+    </script>
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <noscript>
