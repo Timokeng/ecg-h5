@@ -113,7 +113,7 @@ export default {
       display: flex;
 
       .left{
-        width: 1rem;
+        min-width: 1rem;
         font-size: 0.36rem;
         font-family: Microsoft YaHei UI;
         font-weight: 400;
