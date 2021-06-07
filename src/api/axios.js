@@ -20,6 +20,7 @@ axiosIns.interceptors.response.use(
             console.log('网络超时');
         }
         return new Promise.reject(err);
-});
+    }
+);
 
 export default axiosIns;
