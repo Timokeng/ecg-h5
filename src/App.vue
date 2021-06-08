@@ -59,9 +59,91 @@ export default {
   data: ()=>{
     return {
       navActive: 0,
+      pageAdaptDate:{
+        designWidth: 2048,
+        dpr: 1,
+        scale: 1,
+        fontSizeRadio: 1,//手机字体比例
+        isLandscape: false//是否横屏
+      },
     }
   },
+  created(){
+    this.pageAdaptor();
+  },
   methods:{
+    // 移动端页面适配
+    pageAdaptor(){
+      this.pageAdaptDate.dpr = window.devicePixelRatio || 1,
+      this.pageAdaptDate.scale = 1 / this.pageAdaptDate.dpr;
+    
+      /* 该方法可以特为追求极致显示效果，需要和UI配合
+         主要是图片部分，为实现预期效果需要图片尺寸天生偏大，才能实现预期显示
+         本身该方法会减少每个像素点上的物理像素点，实际显示效果未必更好
+      this.setViewPort(); 
+      */
+      this.systemFontSizeCheck();
+      this.setBaseFontSize(); 
+    },
+    // 设置viewport
+    setViewPort(){
+      document.getElementsByName('viewport')[0].setAttribute('content',
+        `width=device-width,
+        initial-scale=${this.pageAdaptDate.scale},
+        maximum-scale=${this.pageAdaptDate.scale},
+        minimum-scale=${this.pageAdaptDate.scale},
+        user-scalable=no`
+      );
+    },
+    // 检查手机系统字体大小和浏览器差距
+    systemFontSizeCheck(){
+      // 设置初始字体，检测系统字体是否正常
+      let setFz = '100px';
+
+      // 设置一个隐藏的元素赖防止font-size设置时页面的晃动
+      let headEle = document.getElementsByTagName('head')[0],
+          spanEle = document.createElement('span');
+      
+      spanEle.style.fontSize = setFz;
+      spanEle.style.display = 'none';
+      headEle.appendChild(spanEle);
+
+      // 比较初始字体和系统字体
+      // 若存在差距则计算换算比例
+      let realFz = getComputedStyle(spanEle).getPropertyValue('font-size');
+
+      if(setFz !== realFz){
+        setFz = parseFloat(setFz);
+        realFz = parseFloat(realFz);
+
+        // 将字体的比例存入数据
+        this.pageAdaptDate.fontSizeRadio = setFz / realFz;
+      }
+    },
+    // 设置html上的font-size
+    setBaseFontSize(){
+      // 横屏状态检测
+      if(window.orientation === 90 || window.orientation === -90){
+        this.pageAdaptDate.isLandscape = true;
+      } else{
+        this.pageAdaptDate.isLandscape = false;
+      }
+      // 获取设备宽度、高度
+      let deviceWidth = document.documentElement.clientWidth;
+      // let deviceHeight = document.documentElement.clientHeight;
+    
+      // 根据状态做横屏状态做适应(本项目默认横版开发，不需要做该适应)
+      /*
+      if(this.pageAdaptDate.isLandscape){
+        deviceWidth = deviceHeight;
+      }
+      */
+      // 结合所有数据做设置font-size
+      let widthRadio = Math.round(deviceWidth / this.pageAdaptDate.designWidth * 100);
+      document.documentElement.style.fontSize = widthRadio * this.pageAdaptDate.fontSizeRadio + 'px';
+    },
+
+    // 导航栏目选择
     chooseNav(num){
       this.navActive = num;
       let path;
@@ -139,6 +221,7 @@ export default {
           img{
             display: block;
             margin: auto;
+            width: 0.61rem;
           }
         }
       }
@@ -177,6 +260,8 @@ export default {
 
     .active{
       background-image: url(./assets/农行-24.png);
+      background-repeat: no-repeat;
+      background-size: cover;
       background-clip: border-box;
       color: #fff;
     }
