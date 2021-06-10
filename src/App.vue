@@ -118,6 +118,7 @@ export default {
 
         // 将字体的比例存入数据
         this.pageAdaptDate.fontSizeRadio = setFz / realFz;
+        console.log(this.pageAdaptDate.fontSizeRadio);
       }
     },
     // 设置html上的font-size
@@ -139,7 +140,8 @@ export default {
       }
       */
       // 结合所有数据做设置font-size
-      let widthRadio = Math.round(deviceWidth / this.pageAdaptDate.designWidth * 100);
+      let widthRadio = Math.floor(deviceWidth / this.pageAdaptDate.designWidth * 100);
+      console.log(widthRadio)
       document.documentElement.style.fontSize = widthRadio * this.pageAdaptDate.fontSizeRadio + 'px';
     },
 
