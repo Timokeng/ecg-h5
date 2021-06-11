@@ -1,51 +1,84 @@
 <template>
   <div id="app">
     <div id="head">
-      <div id="logo">
-        <div id="img">
-          <img src="@/assets/农行-21.png"/>
-        </div>
-      </div>
-      <div id="tabs">
-        <div id="tab">
-          <div class="left">
-            <div class="title">活动1</div>
-            <div class="icon">
-              <img src="@/assets/农行-30.png"/>
-            </div>
+      <div class="center">
+        <div class="logo">
+          <div class="img">
+            <img src="@/assets/nh-logo.png"/>
           </div>
-          <div class="right"></div>
-        </div>
-        <div id="tab">
-          <div class="left">
-            <div class="title">活动1</div>
-            <div class="icon"></div>
+          <div class="img-bottom">
+            <img src="@/assets/nh-logo-bottom.png"/>
           </div>
-          <div class="right"></div>
         </div>
-        <div id="tab">
-          <div class="left">
-            <div class="title">活动1</div>
-            <div class="icon"></div>
-          </div>
-          <div class="right"></div>
-        </div>
-        <div id="tab">
-          <div class="left">
-            <div class="title">活动1</div>
-            <div class="icon"></div>
-          </div>
-          <div class="right"></div>
-        </div>
+        <div class="text">彩云·e客群</div>
       </div>
     </div>
     <div id="main">
       <div id="nav">
-        <div class="nav-option" :class="{active: navActive==0}" @click="chooseNav(0)">任务受理</div>
-        <div class="nav-option" :class="{active: navActive==1}" @click="chooseNav(1)">客户分布</div>
-        <div class="nav-option" :class="{active: navActive==2}" @click="chooseNav(2)">主动营销</div>
+        <div class="nav-option" @click="chooseNav(0)">
+          <div class="box">
+            <div class="img">
+              <img src="@/assets/E客群C-12.png"/>
+            </div>
+            <div class="text">任务受理</div>
+          </div>
+        </div>
+        <div class="nav-option" @click="chooseNav(2)">
+          <div class="box">
+            <div class="img">
+              <img src="@/assets/E客群C-11.png"/>
+            </div>
+            <div class="text">主动营销</div>
+          </div>
+        </div>
       </div>
       <div id="article">
+        <div id="tabs">
+          <div id="tab">
+            <div class="left" :class="{active: activeTab === 0}">
+              <div class="title">活动A</div>
+              <div class="icon">
+                <img src="@/assets/农行-30.png" v-if="activeTab === 0"/>
+              </div>
+            </div>
+            <div class="right">
+              <div class="icon">1</div>
+            </div>
+          </div>
+          <div id="tab">
+            <div class="left" :class="{active: activeTab === 1}">
+              <div class="title">活动B</div>
+              <div class="icon">
+                <img src="@/assets/农行-30.png" v-if="activeTab === 1"/>
+              </div>
+            </div>
+            <div class="right">
+              <div class="icon">1</div>
+            </div>
+          </div>
+          <div id="tab">
+            <div class="left" :class="{active: activeTab === 2}">
+              <div class="title">活动C</div>
+              <div class="icon">
+                <img src="@/assets/农行-30.png" v-if="activeTab === 2"/>
+              </div>
+            </div>
+            <div class="right">
+              <div class="icon">1</div>
+            </div>
+          </div>
+          <div id="tab">
+            <div class="left" :class="{active: activeTab === 3}">
+              <div class="title">活动D</div>
+              <div class="icon">
+                <img src="@/assets/农行-30.png" v-if="activeTab === 3"/>
+              </div>
+            </div>
+            <div class="right">
+              <div class="icon">1</div>
+            </div>
+          </div>
+        </div>
         <router-view/>
       </div>
     </div>
@@ -66,10 +99,19 @@ export default {
         fontSizeRadio: 1,//手机字体比例
         isLandscape: false//是否横屏
       },
+      tid: 0,
+      activeTab: 0
     }
   },
   created(){
     this.pageAdaptor();
+  },
+  mounted(){
+    // 添加页面变化监听器，刷新适配
+    window.addEventListener("resize", ()=>{
+      clearTimeout(this.tid);
+      this.tid = setTimeout(this.setBaseFontSize, 300);
+    })
   },
   methods:{
     // 移动端页面适配
@@ -133,7 +175,7 @@ export default {
       let deviceWidth = document.documentElement.clientWidth;
       // let deviceHeight = document.documentElement.clientHeight;
     
-      // 根据状态做横屏状态做适应(本项目默认横版开发，不需要做该适应)
+      // 根据状态做横屏状态做适应(本项目默认横版开发，不需要做该适应，实际版本记得改过来)
       /*
       if(this.pageAdaptDate.isLandscape){
         deviceWidth = deviceHeight;
@@ -141,7 +183,6 @@ export default {
       */
       // 结合所有数据做设置font-size
       let widthRadio = Math.floor(deviceWidth / this.pageAdaptDate.designWidth * 100);
-      console.log(widthRadio)
       document.documentElement.style.fontSize = widthRadio * this.pageAdaptDate.fontSizeRadio + 'px';
     },
 
@@ -163,118 +204,176 @@ export default {
 </script>
 
 <style lang="scss">
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 #head{
-  height: 1.67rem;
+  min-height: 1rem;
   width: 100%;
-  border-bottom: 1px rgba($color: #000000, $alpha: 0.5) solid;
-  display: flex;
-  margin-bottom: 0.37rem;
+  background-color: RGBA(18, 169, 157, 1);
+  position: relative;
 
-  #logo{
-    height: 100%;
+  .center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
 
-    #img{
-      width: 3.44rem;
-      height: 1.09rem;
-      margin: 0.34rem 0 0.24rem 0.57rem;
+    .logo{
+      .img{
+        width: 2.14rem;
+        height: 0.43rem;
+        margin-bottom: 0.05rem;
 
-      img{
-        max-width: 100%;
-        height: auto;
+        img{
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+      }
+
+      .img-bottom {
+        width: 0.8rem;
+        height: 0.2rem;
+        margin-left: 0.53rem;
+
+        img {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
       }
     }
+
+    .text {
+      font-family: MicrosoftYaHeiUI;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.32rem;
+      height: 0.49rem;
+      line-height: 0.49rem;
+      border-left: 2px solid rgba(255, 255, 255, 1);
+      margin-left: 0.25rem;
+      padding-left: 0.25rem;
+      transform: translateY(0.1rem);
+    }
   }
+}
 
-  #tabs{
-    height: 100%;
-    width: 100%;
-    margin: 0 1rem;
-    border-left: 1px solid black;
+
+#tabs{
+  height: auto;
+  width: 100%;
+  border-bottom: 2px solid rgba(51, 51, 51, 0.6);
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.28rem;
+  margin-top: 0.33rem;
+
+  #tab{
     display: flex;
-    justify-content: space-around;
+    flex: auto;
 
-    #tab{
+    .left {
+      font-size: 0.3rem;
+      font-family: Microsoft YaHei UI;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
       display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: flex-end;
 
-      .left{
-        min-width: 1rem;
-        font-size: 0.36rem;
-        font-family: Microsoft YaHei UI;
-        font-weight: 400;
-        color: #333333;
-        background-color: greenyellow;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        justify-content: flex-end;
-
-        .title{
-          width: 100%;
-          text-align: center;
-          margin-bottom: 0.3rem;
-          height: 0.35rem;
-          opacity: 0.6;
-        }
-
-        .icon{
-          width: 100%;
-          height: 0.11rem;
-
-          img{
-            display: block;
-            margin: auto;
-            width: 0.61rem;
-          }
-        }
+      .title{
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.13rem;
+        height: 0.35rem;
       }
 
-      .right{
-        width: 0.63rem;
-        background-color: indigo;
+      .icon{
+        width: 100%;
+        height: 0.11rem;
+        padding: 0 0.15rem;
+
+        img{
+          display: block;
+          margin: auto;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .active {
+      color: rgba(18, 178, 168, 1);
+    }
+
+    .right{
+      width: 0.63rem;
+      height: 0.91rem;
+
+      .icon {
+        width: 0.45rem;
+        height: 0.3rem;
+        background-image: url('./assets/E客群C-13.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        text-align: center;
+        color: #fff;
+        font-size: 0.17rem;
+        line-height: 0.3rem;
       }
     }
   }
 }
 
+
 #main{
   width: 100%;
-  min-width: 1.294rem;
   display: flex;
 
   #nav{
-    width: 4rem;
+    width: 2.83rem;
     overflow: hidden;
-    padding-top: 0.06rem;
 
     .nav-option{
-      width: 2.95rem;
-      height: 1.03rem;
-      margin: 0 0.57rem 0.48rem 0.48rem;
-      border-radius: 0.1rem;
-      box-shadow: 0 0 0.04rem 0.04rem rgba($color: rgb(204, 199, 199), $alpha: 0.5);
-      text-align: center;
-      line-height: 1.03rem;
-      font-size: 0.32rem;
-      font-weight: 400;
-      color: #221714;
-      font-family: Microsoft YaHei UI;
-    }
+      font-size: 0.27rem;
+      color: rgba(18, 178, 168, 1);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.19rem;
+      &:first-child{
+        margin-top: 0.62rem;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
 
-    .active{
-      background-image: url(./assets/农行-24.png);
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-clip: border-box;
-      color: #fff;
+      .box {
+        .img {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          margin-bottom: 0.05rem;
+
+          img {
+            display: block;
+            width: 0.6rem;
+            height: 0.6rem;
+          }
+        }
+      }
     }
   }
 
   #article{
-    width: 16.16rem;
-    height: 12.94rem;
-    padding-top: 0.06rem;
-    border-radius: 0.25rem;
-    box-shadow: 0 0 0.06rem 0.06rem rgba($color: rgb(204, 199, 199), $alpha: 0.5);
+    width: 17.6rem;
+    height: 14.3rem;
+    padding-left: 0.49rem;
   }
 }
 
