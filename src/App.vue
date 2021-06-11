@@ -15,7 +15,7 @@
     </div>
     <div id="main">
       <div id="nav">
-        <div class="nav-option" @click="chooseNav(0)">
+        <div class="nav-option" :class="{active:navActive === 0}" @click="chooseNav(0)">
           <div class="box">
             <div class="img">
               <img src="@/assets/E客群C-12.png"/>
@@ -23,7 +23,7 @@
             <div class="text">任务受理</div>
           </div>
         </div>
-        <div class="nav-option" @click="chooseNav(2)">
+        <div class="nav-option" :class="{active:navActive === 1}" @click="chooseNav(1)">
           <div class="box">
             <div class="img">
               <img src="@/assets/E客群C-11.png"/>
@@ -37,9 +37,7 @@
           <div id="tab">
             <div class="left" :class="{active: activeTab === 0}">
               <div class="title">活动A</div>
-              <div class="icon">
-                <img src="@/assets/农行-30.png" v-if="activeTab === 0"/>
-              </div>
+              <div class="icon" v-if="activeTab === 0"></div>
             </div>
             <div class="right">
               <div class="icon">1</div>
@@ -48,9 +46,7 @@
           <div id="tab">
             <div class="left" :class="{active: activeTab === 1}">
               <div class="title">活动B</div>
-              <div class="icon">
-                <img src="@/assets/农行-30.png" v-if="activeTab === 1"/>
-              </div>
+              <div class="icon" v-if="activeTab === 1"></div>
             </div>
             <div class="right">
               <div class="icon">1</div>
@@ -59,9 +55,7 @@
           <div id="tab">
             <div class="left" :class="{active: activeTab === 2}">
               <div class="title">活动C</div>
-              <div class="icon">
-                <img src="@/assets/农行-30.png" v-if="activeTab === 2"/>
-              </div>
+              <div class="icon" v-if="activeTab === 2"></div>
             </div>
             <div class="right">
               <div class="icon">1</div>
@@ -70,16 +64,16 @@
           <div id="tab">
             <div class="left" :class="{active: activeTab === 3}">
               <div class="title">活动D</div>
-              <div class="icon">
-                <img src="@/assets/农行-30.png" v-if="activeTab === 3"/>
-              </div>
+              <div class="icon" v-if="activeTab === 3"></div>
             </div>
             <div class="right">
               <div class="icon">1</div>
             </div>
           </div>
         </div>
-        <router-view/>
+        <div id="view-box" class="map">
+          <router-view/>
+        </div>
       </div>
     </div>
   </div>
@@ -193,9 +187,7 @@ export default {
       if(num === 0){
         path = '/task'
       } else if(num === 1){
-        path= '/division'
-      } else{
-        path = '/marketing'
+        path= '/marketing'
       }
       this.$router.push(path);
     }
@@ -270,12 +262,12 @@ export default {
   border-bottom: 2px solid rgba(51, 51, 51, 0.6);
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 0.28rem;
   margin-top: 0.33rem;
+  overflow: scroll;
 
   #tab{
     display: flex;
-    flex: auto;
+    flex: 1 0 auto;
 
     .left {
       font-size: 0.3rem;
@@ -286,6 +278,7 @@ export default {
       flex-wrap: wrap;
       flex-direction: column;
       justify-content: flex-end;
+      align-items: center;
 
       .title{
         width: 100%;
@@ -295,16 +288,10 @@ export default {
       }
 
       .icon{
-        width: 100%;
+        width: 80%;
         height: 0.11rem;
-        padding: 0 0.15rem;
-
-        img{
-          display: block;
-          margin: auto;
-          width: 100%;
-          height: 100%;
-        }
+        background-color: #12B2A8;
+        border-radius: 0.05rem;
       }
     }
     .active {
@@ -338,6 +325,7 @@ export default {
   #nav{
     width: 2.83rem;
     overflow: hidden;
+    background-color: RGBA(245, 245, 245, 1);
 
     .nav-option{
       font-size: 0.27rem;
@@ -345,13 +333,9 @@ export default {
       width: 100%;
       display: flex;
       justify-content: center;
-      margin-bottom: 1.19rem;
-      &:first-child{
-        margin-top: 0.62rem;
-      }
-      &:last-child {
-        margin-bottom: 0;
-      }
+      padding: 0.62rem 0;
+      border-radius: 0.05rem;
+      margin-left:  0.1rem;
 
       .box {
         .img {
@@ -368,12 +352,19 @@ export default {
         }
       }
     }
+    .active {
+      background-color: RGBA(255, 255, 255, 1);
+    }
   }
 
   #article{
-    width: 17.6rem;
-    height: 14.3rem;
     padding-left: 0.49rem;
+
+    .map {
+      width: 17.1rem;
+      height: 13.1rem;
+      padding: 0.3rem 0.3rem 0.3rem 0;
+    }
   }
 }
 
