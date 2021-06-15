@@ -1,5 +1,19 @@
 <template>
   <div class="home">
+    <div id="tabs">
+      <div id="tab" 
+        v-for="tab in tabs" 
+        :key="tab.id"
+        @click="chooseTab(tab.id)">
+        <div class="left" :class="{active: activeTab === tab.id}">
+          <div class="title">{{tab.name}}</div>
+          <div class="icon" :class="{active: activeTab === tab.id}"></div>
+        </div>
+        <div class="right">
+          <div class="icon">{{tab.num}}</div>
+        </div>
+      </div>
+    </div>
     <div class="func">
       <div class="pattern">
         <el-switch
@@ -59,11 +73,23 @@ export default {
         {value: 2, label: '正在处理任务'},
         {value: 3, label: '全部任务'},
       ],
+      tabs: [
+        {id: 0, name: '活动A', num: 3},
+        {id: 1, name: '活动B', num: 1},
+        {id: 2, name: '活动C', num: 4},
+        {id: 3, name: '活动D', num: 2},
+      ],
+      activeTab: 0,
     }
   },
   methods: {
     show(e){
       console.log(e);
+    },
+
+    // 活动选择
+    chooseTab(id){
+      this.activeTab = id;
     }
   }
 }
@@ -73,6 +99,70 @@ export default {
 .home {
   width: 100%;
   height: 100%;
+}
+
+#tabs{
+  height: auto;
+  width: 100%;
+  border-bottom: 2px solid rgba(51, 51, 51, 0.6);
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.3rem;
+  overflow: scroll;
+
+  #tab{
+    display: flex;
+    flex: 1 0 auto;
+
+    .left {
+      font-size: 0.3rem;
+      font-family: Microsoft YaHei UI;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+
+      .title{
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.13rem;
+        height: 0.35rem;
+      }
+
+      .icon{
+        width: 80%;
+        height: 0.11rem;
+        background-color: #fff;
+        border-radius: 0.05rem;
+      }
+      .active {
+        background-color: #12B2A8;
+      }
+    }
+    .active {
+      color: rgba(18, 178, 168, 1);
+    }
+
+    .right{
+      width: 0.63rem;
+      height: 0.91rem;
+
+      .icon {
+        width: 0.45rem;
+        height: 0.3rem;
+        background-image: url('../assets/E客群C-13.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        text-align: center;
+        color: #fff;
+        font-size: 0.17rem;
+        line-height: 0.3rem;
+      }
+    }
+  }
 }
 
 .func {

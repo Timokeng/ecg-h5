@@ -33,44 +33,6 @@
         </div>
       </div>
       <div id="article">
-        <div id="tabs">
-          <div id="tab">
-            <div class="left" :class="{active: activeTab === 0}">
-              <div class="title">活动A</div>
-              <div class="icon" v-if="activeTab === 0"></div>
-            </div>
-            <div class="right">
-              <div class="icon">1</div>
-            </div>
-          </div>
-          <div id="tab">
-            <div class="left" :class="{active: activeTab === 1}">
-              <div class="title">活动B</div>
-              <div class="icon" v-if="activeTab === 1"></div>
-            </div>
-            <div class="right">
-              <div class="icon">1</div>
-            </div>
-          </div>
-          <div id="tab">
-            <div class="left" :class="{active: activeTab === 2}">
-              <div class="title">活动C</div>
-              <div class="icon" v-if="activeTab === 2"></div>
-            </div>
-            <div class="right">
-              <div class="icon">1</div>
-            </div>
-          </div>
-          <div id="tab">
-            <div class="left" :class="{active: activeTab === 3}">
-              <div class="title">活动D</div>
-              <div class="icon" v-if="activeTab === 3"></div>
-            </div>
-            <div class="right">
-              <div class="icon">1</div>
-            </div>
-          </div>
-        </div>
         <div id="view-box" class="map">
           <router-view/>
         </div>
@@ -94,7 +56,6 @@ export default {
         isLandscape: false//是否横屏
       },
       tid: 0,
-      activeTab: 0
     }
   },
   created(){
@@ -190,7 +151,7 @@ export default {
         path= '/marketing'
       }
       this.$router.push(path);
-    }
+    },
   }
 }
 </script>
@@ -255,69 +216,6 @@ export default {
   }
 }
 
-
-#tabs{
-  height: auto;
-  width: 100%;
-  border-bottom: 2px solid rgba(51, 51, 51, 0.6);
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 0.33rem;
-  overflow: scroll;
-
-  #tab{
-    display: flex;
-    flex: 1 0 auto;
-
-    .left {
-      font-size: 0.3rem;
-      font-family: Microsoft YaHei UI;
-      font-weight: 400;
-      color: rgba(51, 51, 51, 1);
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-
-      .title{
-        width: 100%;
-        text-align: center;
-        margin-bottom: 0.13rem;
-        height: 0.35rem;
-      }
-
-      .icon{
-        width: 80%;
-        height: 0.11rem;
-        background-color: #12B2A8;
-        border-radius: 0.05rem;
-      }
-    }
-    .active {
-      color: rgba(18, 178, 168, 1);
-    }
-
-    .right{
-      width: 0.63rem;
-      height: 0.91rem;
-
-      .icon {
-        width: 0.45rem;
-        height: 0.3rem;
-        background-image: url('./assets/E客群C-13.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        text-align: center;
-        color: #fff;
-        font-size: 0.17rem;
-        line-height: 0.3rem;
-      }
-    }
-  }
-}
-
-
 #main{
   width: 100%;
   display: flex;
@@ -362,8 +260,9 @@ export default {
 
     .map {
       width: 17.1rem;
-      height: 13.1rem;
-      padding: 0.3rem 0.3rem 0.3rem 0;
+      height: 14.3rem;
+      padding-right: 0.3rem;
+      padding-top: 0.3rem;
     }
   }
 }
