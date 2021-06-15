@@ -261,7 +261,6 @@ export default {
     .map {
       width: 17.1rem;
       height: 14.3rem;
-      padding-right: 0.3rem;
       padding-top: 0.3rem;
     }
   }

@@ -49,9 +49,32 @@
     <baidu-map class="baidu-map"
       :center="center"
       :zoom="zoom"
-      :scroll-wheel-zoom="true">
+      :scroll-wheel-zoom="true"
+      v-if="ismap">
       <bm-geolocation style="width:100px" @locationSuccess="show" anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
     </baidu-map>
+    <div v-else class="list">
+      <div class="box title">
+        <div class="status">状态</div>
+        <div class="name">客户姓名</div>
+        <div class="id">客户ID</div>
+        <div class="detail">详情</div>
+      </div>
+      <div class="box info" v-for="(item, index) in list" :key="index">
+        <div class="status" 
+          :class="{
+            wait: item.status == '待处理',
+            doing: item.status == '处理中',
+            finish: item.status == '已完成'
+          }">{{item.status}}</div>
+        <div class="name">{{item.name}}</div>
+        <div class="id">No.{{item.id}}</div>
+        <div class="detail">
+          <div class="user">用户画像</div>
+          <div class="form" v-if="item.status == '待处理'">填写表格</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -64,7 +87,7 @@ export default {
         lng: 102.71460114,
         lat: 25.0491531
       },
-      ismap: true,
+      ismap: false,
       scope: 5,
       type: '',
       typeOptions: [
@@ -80,6 +103,23 @@ export default {
         {id: 3, name: '活动D', num: 2},
       ],
       activeTab: 0,
+      list: [
+        {
+          id: 22723781993,
+          name: '张三',
+          status: "待处理"
+        },
+        {
+          id: 22723781994,
+          name: '李四',
+          status: "处理中"
+        },
+        {
+          id: 22723781995,
+          name: '王五',
+          status: "已完成"
+        },
+      ]
     }
   },
   methods: {
@@ -172,6 +212,7 @@ export default {
   font-size: 0.27rem;
   display: flex;
   justify-content: space-between;
+  padding-right: 0.28rem;
   
   //因为需要调element组件的尺寸，大量使用 /deep/
   .pattern {
@@ -282,5 +323,81 @@ export default {
   box-sizing: border-box;
   width: 100%;
   height: 11.65rem;
+  padding-right: 0.28rem;
+}
+
+.list {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 11.65rem;
+  padding: 0.3rem 0.7rem 0 0.4rem;
+
+  .box {
+    width: 16rem;
+    height: 1.07rem;
+    border-radius: 0.1rem;
+    box-shadow: 0 0 10px 5px #DEDEDE;
+    display: flex;
+    align-items: center;
+    font-size: 0.28rem;
+    text-align: center;
+    margin-bottom: 0.36rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .status {
+      width: 15%;
+    }
+    .name {
+      width: 15%;
+    }
+    .id {
+      width: 20%;
+    }
+    .detail {
+      width: 50%;
+    }
+  }
+
+  .title {
+    color: #808080;
+    box-shadow: none;
+    height: auto;
+  }
+
+  .info {
+    .wait {
+      color: #F85D28;
+    }
+    .doing {
+      color: #FAA21E;
+    }
+    .finish {
+      color: #04917D;
+    }
+    .detail {
+      display: flex;
+      justify-content: space-between;
+      color: #fff;
+      padding: 0 0.59rem;
+
+      div {
+        width: 3.07rem;
+        height: 0.53rem;
+        line-height: 0.53rem;
+        border-radius: 0.06rem;
+        flex: auto;
+      }
+      .user {
+        background-color: #12B2A8;
+      }
+      .form {
+        background-color: #FAA21E;
+        margin-left: 0.5rem;
+      }
+    }
+  }
 }
 </style>
