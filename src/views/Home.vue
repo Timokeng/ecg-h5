@@ -12,10 +12,25 @@
       </div>
       <div class="scope">
         <span>范围内客户</span>
-        <el-input-number v-model="scope"></el-input-number>
+        <el-input-number 
+          v-model="scope"
+          :step="5"
+          :min="5"
+          :max="20"
+          step-strictly
+        ></el-input-number>
         <span>KM</span>
       </div>
-      <div class="type"></div>
+      <div class="type">
+        <el-select v-model="type" placeholder="请选择">
+          <el-option
+            v-for="item in typeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
     </div>
     <baidu-map class="baidu-map"
       :center="center"
@@ -37,6 +52,13 @@ export default {
       },
       ismap: true,
       scope: 5,
+      type: '',
+      typeOptions: [
+        {value: 0, label: '已完成任务'},
+        {value: 1, label: '待处理任务'},
+        {value: 2, label: '正在处理任务'},
+        {value: 3, label: '全部任务'},
+      ],
     }
   },
   methods: {
@@ -56,17 +78,15 @@ export default {
 .func {
   width: 100%;
   height: 0.59rem;
-  border: 1px solid black;
   margin-bottom: 0.25rem;
   font-size: 0.27rem;
-  position: relative;
+  display: flex;
+  justify-content: space-between;
   
   //因为需要调element组件的尺寸，大量使用 /deep/
   .pattern {
     font-size: 0.27rem;
     height: 100%;
-    display: inline-block;
-    margin-right: 1rem;
 
     /deep/ .el-switch {
       height: 100%;
@@ -86,7 +106,6 @@ export default {
       .el-switch__label {
         span {
           font-size: 0.27rem;
-          font-weight: 600;
         }
       }
 
@@ -106,8 +125,7 @@ export default {
   .scope {
     font-size: 0.27rem;
     height: 100%;
-    display: inline-block;
-    font-weight: 600;
+
 
     /deep/.el-input-number {
       width: 2.65rem;
@@ -116,11 +134,17 @@ export default {
 
       .el-input-number__decrease {
         width: 0.63rem;
-        height: 100%;
+        height: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .el-input-number__increase {
         width: 0.63rem;
-        height: 100%;
+        height: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .el-input {
         height: 100%;
@@ -128,6 +152,36 @@ export default {
 
         .el-input__inner {
           height: 100%;
+          line-height: 100%;
+          display: block;
+
+          &:focus {
+            border-color: #C0C4CC;
+          }
+        }
+      }
+    }
+  }
+
+  .type {
+    font-size: 0.27rem;
+    height: 100%;
+    align-self: flex-end;
+
+    /deep/.el-select {
+      height: 100%;
+      width: 3.55rem;
+
+      .el-input {
+        height: 100%;
+
+        .el-input__inner {
+          height: 100%;
+          line-height: 100%;
+
+          &:focus {
+            border-color: #C0C4CC;
+          }
         }
       }
     }
