@@ -15,35 +15,40 @@
       </div>
     </div>
     <div class="func">
-      <div class="pattern">
-        <el-switch
-          v-model="ismap"
-          active-color="#12B2A8"
-          inactive-color="#12B2A8"
-          active-text="地图模式"
-          inactive-text="列表模式"
-        ></el-switch>
+      <div class="task" v-if="mapFunc === 0">
+        <div class="pattern">
+          <el-switch
+            v-model="ismap"
+            active-color="#12B2A8"
+            inactive-color="#12B2A8"
+            active-text="地图模式"
+            inactive-text="列表模式"
+          ></el-switch>
+        </div>
+        <div class="scope">
+          <span>范围内客户</span>
+          <el-input-number 
+            v-model="scope"
+            :step="5"
+            :min="5"
+            :max="20"
+            step-strictly
+          ></el-input-number>
+          <span>KM</span>
+        </div>
+        <div class="type">
+          <el-select v-model="type" placeholder="请选择">
+            <el-option
+              v-for="item in typeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
       </div>
-      <div class="scope">
-        <span>范围内客户</span>
-        <el-input-number 
-          v-model="scope"
-          :step="5"
-          :min="5"
-          :max="20"
-          step-strictly
-        ></el-input-number>
-        <span>KM</span>
-      </div>
-      <div class="type">
-        <el-select v-model="type" placeholder="请选择">
-          <el-option
-            v-for="item in typeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+      <div class="marketing" v-if="mapFunc === 1">
+        <div class="button">填写表单</div>
       </div>
     </div>
     <baidu-map class="baidu-map"
@@ -80,14 +85,18 @@
 
 <script>
 export default {
+  created(){
+    
+  },
   data: () => {
     return {
+      mapFunc: 0,
       zoom: 15,
       center: {
         lng: 102.71460114,
         lat: 25.0491531
       },
-      ismap: false,
+      ismap: true,
       scope: 5,
       type: '',
       typeOptions: [
@@ -139,6 +148,7 @@ export default {
 .home {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 #tabs{
@@ -210,108 +220,132 @@ export default {
   height: 0.59rem;
   margin-bottom: 0.25rem;
   font-size: 0.27rem;
-  display: flex;
-  justify-content: space-between;
-  padding-right: 0.28rem;
   
-  //因为需要调element组件的尺寸，大量使用 /deep/
-  .pattern {
-    font-size: 0.27rem;
+  .marketing {
+    width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    padding-right: 0.28rem;
 
-    /deep/ .el-switch {
-      height: 100%;
-      width: auto;
-      
-      .el-switch__core {
-        width: 1.08rem !important;
-        height: 0.42rem;
-        border-radius: 0.21rem;
-      }
-
-      .el-switch__core:after {
-        width: 0.34rem;
-        height: 0.34rem;
-      }
-
-      .el-switch__label {
-        span {
-          font-size: 0.27rem;
-        }
-      }
-
-      .is-active {
-        color: #12B2A8;
-      }
-    }
-
-    /deep/.is-checked {
-      .el-switch__core:after {
-        left: 100%;
-        margin-left: -(0.42rem * 17 / 20);
-      }
+    .button {
+      width: 3.61rem;
+      height: 0.54rem;
+      background-color: #12B2A8;
+      line-height: 0.54rem;
+      text-align: center;
+      color: #fff;
+      font-size: 0.27rem;
+      border-radius: 0.06rem;
     }
   }
 
-  .scope {
-    font-size: 0.27rem;
+  .task {
+    width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 0.28rem;
+    
+    //因为需要调element组件的尺寸，大量使用 /deep/
+    .pattern {
+      font-size: 0.27rem;
+      height: 100%;
 
-
-    /deep/.el-input-number {
-      width: 2.65rem;
-      height: 0.54rem;
-      margin: 0 0.2rem;
-
-      .el-input-number__decrease {
-        width: 0.63rem;
-        height: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .el-input-number__increase {
-        width: 0.63rem;
-        height: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .el-input {
+      /deep/ .el-switch {
         height: 100%;
-        font-size: 0.27rem;
+        width: auto;
+        
+        .el-switch__core {
+          width: 1.08rem !important;
+          height: 0.42rem;
+          border-radius: 0.21rem;
+        }
 
-        .el-input__inner {
+        .el-switch__core:after {
+          width: 0.34rem;
+          height: 0.34rem;
+        }
+
+        .el-switch__label {
+          span {
+            font-size: 0.27rem;
+          }
+        }
+
+        .is-active {
+          color: #12B2A8;
+        }
+      }
+
+      /deep/.is-checked {
+        .el-switch__core:after {
+          left: 100%;
+          margin-left: -(0.42rem * 17 / 20);
+        }
+      }
+    }
+
+    .scope {
+      font-size: 0.27rem;
+      height: 100%;
+
+
+      /deep/.el-input-number {
+        width: 2.65rem;
+        height: 0.54rem;
+        margin: 0 0.2rem;
+
+        .el-input-number__decrease {
+          width: 0.63rem;
+          height: 0.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .el-input-number__increase {
+          width: 0.63rem;
+          height: 0.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .el-input {
           height: 100%;
-          line-height: 100%;
-          display: block;
+          font-size: 0.27rem;
 
-          &:focus {
-            border-color: #C0C4CC;
+          .el-input__inner {
+            height: 100%;
+            line-height: 100%;
+            display: block;
+
+            &:focus {
+              border-color: #C0C4CC;
+            }
           }
         }
       }
     }
-  }
 
-  .type {
-    font-size: 0.27rem;
-    height: 100%;
-    align-self: flex-end;
-
-    /deep/.el-select {
+    .type {
+      font-size: 0.27rem;
       height: 100%;
-      width: 3.55rem;
+      align-self: flex-end;
 
-      .el-input {
+      /deep/.el-select {
         height: 100%;
+        width: 3.55rem;
 
-        .el-input__inner {
+        .el-input {
           height: 100%;
-          line-height: 100%;
 
-          &:focus {
-            border-color: #C0C4CC;
+          .el-input__inner {
+            height: 100%;
+            line-height: 100%;
+
+            &:focus {
+              border-color: #C0C4CC;
+            }
           }
         }
       }

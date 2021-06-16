@@ -14,7 +14,7 @@
       </div>
     </div>
     <div id="main">
-      <div id="nav">
+      <div id="nav" v-if="!isForm">
         <div class="nav-option" :class="{active:navActive === 0}" @click="chooseNav(0)">
           <div class="box">
             <div class="img">
@@ -33,8 +33,8 @@
         </div>
       </div>
       <div id="article">
-        <div id="view-box" class="map">
-          <router-view/>
+        <div id="view-box" :class="{map: !isForm, form: isForm}">
+          <router-view @openForm="openForm"/>
         </div>
       </div>
     </div>
@@ -56,10 +56,14 @@ export default {
         isLandscape: false//是否横屏
       },
       tid: 0,
+      isForm: true
     }
   },
   created(){
     this.pageAdaptor();
+  },
+  updated(){
+    console.log('update');
   },
   mounted(){
     // 添加页面变化监听器，刷新适配
@@ -150,8 +154,15 @@ export default {
       } else if(num === 1){
         path= '/marketing'
       }
+      if(this.$route.path == path){ return }
       this.$router.push(path);
     },
+
+    // 打开填写表单页面
+    openForm(){
+      this.isForm = true;
+      this.$router.push('/formlist');
+    }
   }
 }
 </script>
@@ -165,7 +176,7 @@ export default {
 
 #head{
   min-height: 1rem;
-  width: 100%;
+  width: 20.7rem;
   background-color: RGBA(18, 169, 157, 1);
   position: relative;
 
@@ -256,14 +267,23 @@ export default {
   }
 
   #article{
-    padding-left: 0.49rem;
 
     .map {
       width: 17.1rem;
-      height: 14.3rem;
+      height: 14.4rem;
       padding-top: 0.3rem;
+      padding-left: 0.49rem;
+    }
+
+    .form {
+      width: 20.7rem;
+      height: 14.4rem;
     }
   }
+}
+
+html,body {
+  width: 100%;
 }
 
 #app {
@@ -271,5 +291,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
+  width: 100%;
 }
 </style>

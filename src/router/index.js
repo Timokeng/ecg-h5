@@ -25,9 +25,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Marketing.vue')
   },
   {
-    path: '/division',
-    name: 'Division',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Division.vue')
+    path: '/formlist',
+    name: 'FormList',
+    component: () => import(/* webpackChunkName: "about" */ '../views/FormList.vue')
+  },
+  {
+    path: '/form',
+    name: 'Form',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Form.vue')
   },
   {
     path: '*',
