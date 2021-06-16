@@ -3,19 +3,19 @@
         <div class="box">
             <el-row>
                 <div class="label">客户标签:</div>
-                <el-input></el-input>
+                <el-input v-model="defaultData"></el-input>
             </el-row>
             <el-row>
                 <div class="label">客户标签:</div>
-                <el-input></el-input>
+                <el-input v-model="defaultData"></el-input>
             </el-row>
             <el-row>
                 <div class="label">客户标签:</div>
-                <el-input></el-input>
+                <el-input v-model="defaultData"></el-input>
             </el-row>
             <el-row>
                 <div class="label">客户标签:</div>
-                <el-input></el-input>
+                <el-input v-model="defaultData"></el-input>
             </el-row>
             <div class="button">提交</div>
         </div>
@@ -24,7 +24,18 @@
 
 <script>
 export default{
-
+    created(){
+        this.formStatus = Number(this.$route.query.formStatus);
+        if(this.formStatus === 1){
+            this.defaultData = '';
+        }
+    },
+    data: ()=>{
+        return {
+            formStatus: 0,
+            defaultData: '示例内容示例内容示例内容'
+        }
+    }
 }
 </script>
 

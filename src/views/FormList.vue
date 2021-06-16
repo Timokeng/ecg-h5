@@ -34,7 +34,7 @@ export default{
         go(num){
             this.$router.push({
                 path: '/form',
-                query: { formType: num}
+                query: { formStatus: num}
             })
         }
     }

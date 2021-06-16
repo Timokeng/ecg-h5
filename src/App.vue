@@ -56,10 +56,11 @@ export default {
         isLandscape: false//是否横屏
       },
       tid: 0,
-      isForm: true
+      isForm: false
     }
   },
   created(){
+    this.judgeIsForm();
     this.pageAdaptor();
   },
   updated(){
@@ -162,6 +163,16 @@ export default {
     openForm(){
       this.isForm = true;
       this.$router.push('/formlist');
+    },
+
+    // 判断是否是表单相关页面，主要处理nav的显示
+    judgeIsForm(){
+      let name = this.$route.name;
+      if(name == 'Form' || name == 'FormList'){
+        this.isForm = true;
+      } else{
+        this.isForm = false;
+      }
     }
   }
 }
