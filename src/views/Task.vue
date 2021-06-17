@@ -53,8 +53,8 @@
         :center="center"
         :zoom="zoom">
       </baidu-map>
-      <div class="user-info-box" v-if="showUserDetail">
-        <div class="user-base-box">
+      <div class="user-info-box" v-if="showUserDetail" @click="closeUserBox">
+        <div class="user-base-box" @click.stop>
           <div class="right">
             <div class="base">
               <div class="name">{{currUser.base.name}}</div>
@@ -109,17 +109,17 @@
                   </div>
                   <div class="date">{{path.date}}</div>
                   <div class="pos">{{path.pos}}</div>
-                  <div class="detail-form">点击查看</div>
+                  <div class="detail-form" @click="openForm">点击查看</div>
                 </div>
                 <div class="dashed"></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="form-detail" v-if="showForm">
+        <div class="form-detail" v-if="showForm" @click.stop>
           <div class="title">客户表单</div>
           <div class="form-onlysee"></div>
-          <div class="close-button">
+          <div class="close-button" @click="closeForm">
             <img src="../assets/E客群C-18.png"/>
           </div>
         </div>
@@ -269,6 +269,19 @@ export default {
             this.mapFunc = 1;
         }
     },
+
+    // 关闭表单
+    closeForm(){
+      this.showForm = false;
+    },
+    // 打开表单
+    openForm(){
+      this.showForm = true;
+    },
+    // 关闭整个用户详细视图
+    closeUserBox(){
+      this.showUserDetail = false;
+    }
   }
 }
 </script>
