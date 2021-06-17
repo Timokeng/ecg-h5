@@ -60,10 +60,10 @@ export default {
     }
   },
   created(){
-    this.judgeIsForm();
     this.pageAdaptor();
   },
   updated(){
+    this.judgeIsForm();
     console.log('update');
   },
   mounted(){
