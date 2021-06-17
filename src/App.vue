@@ -183,6 +183,7 @@ export default {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "MicrosoftYaHeiUI", MicrosoftYaHeiUI, "微软雅黑";
 }
 
 #head{
