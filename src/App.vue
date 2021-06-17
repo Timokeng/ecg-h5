@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <div id="head">
+      <div class="go-back" @click="goBack">
+        <img src="./assets/goBack.png"/>
+      </div>
       <div class="center">
         <div class="logo">
           <div class="img">
@@ -173,6 +176,11 @@ export default {
       } else{
         this.isForm = false;
       }
+    },
+
+    // 回退
+    goBack(){
+      this.$router.go(-1);
     }
   }
 }
@@ -192,6 +200,22 @@ export default {
   background-color: RGBA(18, 169, 157, 1);
   position: relative;
 
+  .go-back {
+    width: 0.8rem;
+    height: 0.8rem;
+    display: inline-flex;
+    position: absolute;
+    top: 50%;
+    left: 3%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 0.22rem;
+      display: block;
+    }
+  }
   .center{
     position: absolute;
     top: 50%;
