@@ -196,8 +196,8 @@ export default {
           status: "已完成"
         },
       ],
-      showUserDetail: true,
-      showForm: true,
+      showUserDetail: false,
+      showForm: false,
       currUser: {
         base: {
           name: '张三',
