@@ -73,7 +73,7 @@
         <div class="id">No.{{item.id}}</div>
         <div class="detail">
           <div class="user">用户画像</div>
-          <div class="form" v-if="item.status == '待处理'">填写表格</div>
+          <div class="doform" v-if="item.status == '待处理'">填写表格</div>
         </div>
       </div>
     </div>
@@ -434,7 +434,7 @@ export default {
       .user {
         background-color: #12B2A8;
       }
-      .form {
+      .doform {
         background-color: #FAA21E;
         margin-left: 0.5rem;
       }

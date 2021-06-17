@@ -280,7 +280,7 @@ export default {
   #article{
 
     .map {
-      width: 17.1rem;
+      width: 18rem;
       height: 14.4rem;
       padding-top: 0.3rem;
       padding-left: 0.49rem;
