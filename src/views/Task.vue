@@ -245,7 +245,7 @@ export default {
       },
       ismap: true,
       scope: 5,
-      type: '',
+      type: 0,
       typeOptions: [
         {value: 0, label: '已完成任务'},
         {value: 1, label: '待处理任务'},
