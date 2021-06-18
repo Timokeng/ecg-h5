@@ -23,7 +23,6 @@ export default {
     },
     methods: {
         handleClick(){
-            console.log(123)
             this.$emit('openUserBox');
         },
         draw ({ el, BMap, map}) {

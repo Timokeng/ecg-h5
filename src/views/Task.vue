@@ -51,15 +51,8 @@
     <div class="baidu-map-box" v-if="ismap">
       <baidu-map class="baidu-map"
         :center="center"
-        :zoom="zoom">
-        <!--
-        <bm-marker 
-          v-for="(item, index) in list"
-          :key="index"
-          :position="item.pos" 
-          @click="openUserBox">
-        </bm-marker>
-        -->
+        :zoom="zoom"
+        :dragging="false">
         <my-overlay
           v-for="(user, index) in list"
           :key="index"
@@ -69,7 +62,7 @@
       </baidu-map>
       <div class="user-info-box" v-if="showUserDetail" @click="closeUserBox">
         <div class="user-base-box" @click.stop>
-          <div class="right">
+          <div class="left">
             <div class="base">
               <div class="name">{{currUser.base.name}}</div>
               <div class="id">No.{{currUser.base.id}}</div>
@@ -111,7 +104,7 @@
               </div>
             </div>
           </div>
-          <div class="left">
+          <div class="right">
             <div class="img-data">
               <img src="../assets/五星图.png"/>
             </div>
@@ -165,7 +158,7 @@
       </div>
       <div class="user-info-box" v-if="showUserDetail" @click="closeUserBox">
         <div class="user-base-box" @click.stop>
-          <div class="right">
+          <div class="left">
             <div class="base">
               <div class="name">{{currUser.base.name}}</div>
               <div class="id">No.{{currUser.base.id}}</div>
@@ -207,7 +200,7 @@
               </div>
             </div>
           </div>
-          <div class="left">
+          <div class="right">
             <div class="img-data">
               <img src="../assets/五星图.png"/>
             </div>
@@ -627,7 +620,7 @@ export default {
       display: flex;
       justify-content: space-between;
 
-      .right {
+      .left {
         width: 6.2rem;
         height: 100%;
         background-color: #fff;
@@ -709,13 +702,17 @@ export default {
               font-size: 0.2rem;
               width: 1.25rem;
               height: 0.5rem;
-              margin-right: 0.2rem;
+              margin-right: 0.04rem;
               border-radius: 0.25rem;
               border: 1px solid #04917D;
               margin-bottom: 0.1rem;
               color: #04917D;
               text-align: center;
               line-height: 0.45rem;
+
+              &:last-child {
+                margin-right: 0;
+              }
 
               &:nth-child(2n) {
                 background-color: #04917D;
@@ -725,7 +722,7 @@ export default {
           }
         }
       }
-      .left {
+      .right {
         width: 6.91rem;
         height: 100%;
         display: flex;
@@ -774,7 +771,7 @@ export default {
                 }
               }
               .date {
-                width: 25%;
+                min-width: 25%;
               }
               .pos {
                 width: 35%;
@@ -857,7 +854,7 @@ export default {
       display: flex;
       justify-content: space-between;
 
-      .right {
+      .left {
         width: 6.2rem;
         height: 100%;
         background-color: #fff;
@@ -932,7 +929,7 @@ export default {
 
           .label-list {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             flex-wrap: wrap;
 
             .label-box {
@@ -942,9 +939,14 @@ export default {
               border-radius: 0.25rem;
               border: 1px solid #04917D;
               margin-bottom: 0.1rem;
+              margin-right: 0.04rem;
               color: #04917D;
               text-align: center;
               line-height: 0.45rem;
+
+              &:last-child {
+                margin-right: 0;
+              }
 
               &:nth-child(2n) {
                 background-color: #04917D;
@@ -954,7 +956,7 @@ export default {
           }
         }
       }
-      .left {
+      .right {
         width: 6.91rem;
         height: 100%;
         display: flex;
@@ -1003,7 +1005,7 @@ export default {
                 }
               }
               .date {
-                width: 25%;
+                min-width: 25%;
               }
               .pos {
                 width: 35%;
