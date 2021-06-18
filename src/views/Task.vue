@@ -52,12 +52,20 @@
       <baidu-map class="baidu-map"
         :center="center"
         :zoom="zoom">
+        <!--
         <bm-marker 
           v-for="(item, index) in list"
           :key="index"
           :position="item.pos" 
           @click="openUserBox">
         </bm-marker>
+        -->
+        <my-overlay
+          v-for="(user, index) in list"
+          :key="index"
+          :user="user"
+          @openUserBox="openUserBox"
+        ></my-overlay>
       </baidu-map>
       <div class="user-info-box" v-if="showUserDetail" @click="closeUserBox">
         <div class="user-base-box" @click.stop>
@@ -231,6 +239,8 @@
 </template>
 
 <script>
+import MyOverlay from "@/components/MyOverlay.vue"
+
 export default {
   created(){
     this.judgeMapFunc();
@@ -373,6 +383,9 @@ export default {
     toForm(){
       this.$emit('openForm', 1)
     }
+  },
+  components: {
+    MyOverlay
   }
 }
 </script>
@@ -689,13 +702,14 @@ export default {
 
           .label-list {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             flex-wrap: wrap;
 
             .label-box {
               font-size: 0.2rem;
               width: 1.25rem;
               height: 0.5rem;
+              margin-right: 0.2rem;
               border-radius: 0.25rem;
               border: 1px solid #04917D;
               margin-bottom: 0.1rem;

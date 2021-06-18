@@ -22,13 +22,14 @@
     <div class="baidu-map-box" v-if="ismap">
       <baidu-map class="baidu-map"
         :center="center"
-        :zoom="zoom">
-        <bm-marker 
-          v-for="(item, index) in list"
+        :zoom="zoom"
+        :dragging="false">
+        <my-overlay
+          v-for="(user, index) in list"
           :key="index"
-          :position="item.pos" 
-          @click="openUserBox">
-        </bm-marker>
+          :user="user"
+          @openUserBox="openUserBox"
+        ></my-overlay>
       </baidu-map>
       <div class="user-info-box" v-if="showUserDetail" @click="closeUserBox">
         <div class="user-base-box" @click.stop>
@@ -98,6 +99,8 @@
 </template>
 
 <script>
+import MyOverlay from "@/components/MyOverlay.vue"
+
 export default {
   created(){
     this.judgeMapFunc();
@@ -130,13 +133,13 @@ export default {
         {
           id: 22723781993,
           name: '张三',
-          status: "待处理",
+          status: "未知",
           pos: {lng: 102.71460114, lat: 25.0491531}
         },
         {
           id: 22723781994,
           name: '李四',
-          status: "处理中",
+          status: "未知",
           pos: {lng: 102.71660214, lat: 25.0481331}
         },
         {
@@ -233,6 +236,9 @@ export default {
     openUserBox(){
       this.showUserDetail = true;
     },
+  },
+  components: {
+    MyOverlay
   }
 }
 </script>
