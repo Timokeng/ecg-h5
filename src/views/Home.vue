@@ -4,7 +4,9 @@
 
 <script>
 export default {
-  
+  created(){
+    this.$router.replace('/task');
+  }
 }
 </script>
 

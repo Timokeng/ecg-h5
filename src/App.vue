@@ -73,7 +73,7 @@ export default {
     // 添加页面变化监听器，刷新适配
     window.addEventListener("resize", ()=>{
       clearTimeout(this.tid);
-      this.tid = setTimeout(this.setBaseFontSize, 300);
+      this.tid = setTimeout(this.pageAdaptor(), 300);
     })
   },
   methods:{
@@ -305,15 +305,15 @@ export default {
   #article{
 
     .map {
-      width: 18rem;
-      height: 14.4rem;
+      width: 17.8rem;
+      height: 14.5rem;
       padding-top: 0.3rem;
       padding-left: 0.49rem;
     }
 
     .form {
       width: 20.7rem;
-      height: 14.4rem;
+      height: 14.5rem;
     }
   }
 }
