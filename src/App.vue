@@ -273,6 +273,7 @@ export default {
 #main{
   width: 100%;
   display: flex;
+  justify-content: flex-start;
 
   #nav{
     width: 2.83rem;
@@ -310,17 +311,20 @@ export default {
   }
 
   #article{
+    flex: auto;
 
     .map {
-      width: 17.8rem;
-      height: 14.5rem;
+      //width: 17.8rem;
+      width: 100%;
+      height: 14.4rem;
       padding-top: 0.3rem;
       padding-left: 0.49rem;
     }
 
     .form {
-      width: 20.7rem;
-      height: 14.5rem;
+      //width: 20.7rem;
+      width: 100%;
+      height: 14.4rem;
     }
   }
 }

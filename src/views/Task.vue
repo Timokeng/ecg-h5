@@ -571,7 +571,10 @@ export default {
 
         .el-input {
           height: 100%;
-
+          
+          .el-input__icon {
+            line-height: auto;
+          }
           .el-input__inner {
             height: 100%;
             line-height: 100%;
