@@ -163,9 +163,16 @@ export default {
     },
 
     // 打开填写表单页面
-    openForm(){
+    openForm(num){
       this.isForm = true;
-      this.$router.push('/formlist');
+      if(num === 0){
+        this.$router.push('/formlist');
+      } else if(num === 1){
+        this.$router.push({
+            path: '/form',
+            query: { formStatus: 1}
+        });
+      }
     },
 
     // 判断是否是表单相关页面，主要处理nav的显示

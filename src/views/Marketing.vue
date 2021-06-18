@@ -23,6 +23,12 @@
       <baidu-map class="baidu-map"
         :center="center"
         :zoom="zoom">
+        <bm-marker 
+          v-for="(item, index) in list"
+          :key="index"
+          :position="item.pos" 
+          @click="openUserBox">
+        </bm-marker>
       </baidu-map>
       <div class="user-info-box" v-if="showUserDetail" @click="closeUserBox">
         <div class="user-base-box" @click.stop>
@@ -99,7 +105,7 @@ export default {
   data: () => {
     return {
       mapFunc: 0,
-      zoom: 15,
+      zoom: 18,
       center: {
         lng: 102.71460114,
         lat: 25.0491531
@@ -124,17 +130,20 @@ export default {
         {
           id: 22723781993,
           name: '张三',
-          status: "待处理"
+          status: "待处理",
+          pos: {lng: 102.71460114, lat: 25.0491531}
         },
         {
           id: 22723781994,
           name: '李四',
-          status: "处理中"
+          status: "处理中",
+          pos: {lng: 102.71660214, lat: 25.0481331}
         },
         {
           id: 22723781995,
           name: '王五',
-          status: "已完成"
+          status: "已完成",
+          pos: {lng: 102.71360414, lat: 25.0501631}
         },
       ],
       showUserDetail: false,
@@ -217,7 +226,12 @@ export default {
 
     // 触发父组件openForm方法
     openForm(){
-        this.$emit('openForm')
+        this.$emit('openForm', 0)
+    },
+
+    // 打开用户详情页面
+    openUserBox(){
+      this.showUserDetail = true;
     },
   }
 }

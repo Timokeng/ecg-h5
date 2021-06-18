@@ -52,6 +52,12 @@
       <baidu-map class="baidu-map"
         :center="center"
         :zoom="zoom">
+        <bm-marker 
+          v-for="(item, index) in list"
+          :key="index"
+          :position="item.pos" 
+          @click="openUserBox">
+        </bm-marker>
       </baidu-map>
       <div class="user-info-box" v-if="showUserDetail" @click="closeUserBox">
         <div class="user-base-box" @click.stop>
@@ -142,8 +148,82 @@
         <div class="name">{{item.name}}</div>
         <div class="id">No.{{item.id}}</div>
         <div class="detail">
-          <div class="user">用户画像</div>
-          <div class="doform" v-if="item.status == '待处理'">填写表格</div>
+          <div class="user" @click="openUserBox">用户画像</div>
+          <div class="doform" 
+            v-if="item.status == '待处理'"
+            @click="toForm">填写表格
+          </div>
+        </div>
+      </div>
+      <div class="user-info-box" v-if="showUserDetail" @click="closeUserBox">
+        <div class="user-base-box" @click.stop>
+          <div class="right">
+            <div class="base">
+              <div class="name">{{currUser.base.name}}</div>
+              <div class="id">No.{{currUser.base.id}}</div>
+            </div>
+            <div class="detail">
+              <div class="text">
+                <div class="title">联系电话：</div>
+                <div class="info">{{currUser.detail.pho}}</div>
+              </div>
+              <div class="text">
+                <div class="title">身份证：</div>
+                <div class="info">{{currUser.detail.idCad}}</div>
+              </div>
+              <div class="text">
+                <div class="title">家庭住址：</div>
+                <div class="info">{{currUser.detail.homeAdd}}</div>
+              </div>
+              <div class="text">
+                <div class="title">商铺名称：</div>
+                <div class="info">{{currUser.detail.store}}</div>
+              </div>
+              <div class="text">
+                <div class="title">商铺名称</div>
+                <div class="info">{{currUser.detail.store}}</div>
+              </div>
+              <div class="photos">
+                <div class="title">与客户合影:</div>
+                <div class="photo-list">
+                  <div class="photo"></div>
+                  <div class="photo"></div>
+                  <div class="photo"></div>
+                </div>
+              </div>
+            </div>
+            <div class="label">
+              <div class="title">客户标签：</div>
+              <div class="label-list">
+                <div class="label-box" v-for="(item, index) in currUser.label" :key="index">{{item.name}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="left">
+            <div class="img-data">
+              <img src="../assets/五星图.png"/>
+            </div>
+            <div class="path-list">
+              <div class="list-box" v-for="(path, index) in currUser.paths" :key="index">
+                <div class="path-line">
+                  <div class="icon">
+                    <img src="../assets/农行-32.png"/>
+                  </div>
+                  <div class="date">{{path.date}}</div>
+                  <div class="pos">{{path.pos}}</div>
+                  <div class="detail-form" @click="openForm">点击查看</div>
+                </div>
+                <div class="dashed"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-detail" v-if="showForm" @click.stop>
+          <div class="title">客户表单</div>
+          <div class="form-onlysee"></div>
+          <div class="close-button" @click="closeForm">
+            <img src="../assets/E客群C-18.png"/>
+          </div>
         </div>
       </div>
     </div>
@@ -158,7 +238,7 @@ export default {
   data: () => {
     return {
       mapFunc: 0,
-      zoom: 15,
+      zoom: 18,
       center: {
         lng: 102.71460114,
         lat: 25.0491531
@@ -183,17 +263,20 @@ export default {
         {
           id: 22723781993,
           name: '张三',
-          status: "待处理"
+          status: "待处理",
+          pos: {lng: 102.71460114, lat: 25.0491531}
         },
         {
           id: 22723781994,
           name: '李四',
-          status: "处理中"
+          status: "处理中",
+          pos: {lng: 102.71660214, lat: 25.0481331}
         },
         {
           id: 22723781995,
           name: '王五',
-          status: "已完成"
+          status: "已完成",
+          pos: {lng: 102.71360414, lat: 25.0501631}
         },
       ],
       showUserDetail: false,
@@ -281,6 +364,14 @@ export default {
     // 关闭整个用户详细视图
     closeUserBox(){
       this.showUserDetail = false;
+    },
+    // 打开用户详情页面
+    openUserBox(){
+      this.showUserDetail = true;
+    },
+    // 进去表单列表页面
+    toForm(){
+      this.$emit('openForm', 1)
     }
   }
 }
@@ -732,6 +823,228 @@ export default {
   width: 100%;
   min-height: 11.65rem;
   padding: 0.3rem 0.7rem 0 0.4rem;
+  position: relative;
+
+  .user-info-box {
+    width: 100%;
+    height: 11.85rem;
+    position: absolute;
+    top: 0;
+    background-color: rgba($color: #fff, $alpha: 0);
+    padding-top: 0.52rem;
+    padding-left: 0.88rem;
+
+    .user-base-box {
+      width: 13.5rem;
+      height: 10.5rem;
+      display: flex;
+      justify-content: space-between;
+
+      .right {
+        width: 6.2rem;
+        height: 100%;
+        background-color: #fff;
+        padding: 0.47rem 0.52rem;
+        overflow: scroll;
+        border-radius: 0.1rem;
+        box-shadow: 0 0 8px 2px #d1cfcf;
+
+        .base {
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 1px solid rgba($color: #808080, $alpha: 0.5);
+          color: #221714;
+          font-size: 0.27rem;
+          padding-bottom: 0.24rem;
+          margin-bottom: 0.6rem;
+        }
+
+        .detail {
+          font-size: 0.27rem;
+          border-bottom: 1px solid rgba($color: #808080, $alpha: 0.5);
+          padding-bottom: 0.28rem;
+          margin-bottom: 0.4rem;
+
+          .text {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            text-align: left;
+            margin-bottom: 0.24rem;
+
+            .title {
+              color: rgba($color: #000000, $alpha: 0.8);
+            }
+            .info {
+              max-width: 65%;
+              color: #0D927D;
+            }
+          }
+
+          .photos {
+            margin-top: 0.8rem;
+
+            .title {
+              margin-bottom: 0.2rem;
+              color: rgba($color: #000000, $alpha: 0.8);
+            }
+            
+            .photo-list {
+              display: flex;
+              justify-content: space-between;
+              flex-wrap: wrap;
+
+              .photo {
+                width: 1.62rem;
+                height: 1.11rem;
+                margin-bottom: 0.05rem;
+                background-color: #808080;
+              }
+            }
+          }
+        }
+
+        .label {
+          font-size: 0.27rem;
+
+          .title {
+            margin-bottom: 0.3rem;
+            color: rgba($color: #000000, $alpha: 0.8);
+          }
+
+          .label-list {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            .label-box {
+              font-size: 0.2rem;
+              width: 1.25rem;
+              height: 0.5rem;
+              border-radius: 0.25rem;
+              border: 1px solid #04917D;
+              margin-bottom: 0.1rem;
+              color: #04917D;
+              text-align: center;
+              line-height: 0.45rem;
+
+              &:nth-child(2n) {
+                background-color: #04917D;
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+      .left {
+        width: 6.91rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .img-data {
+          width: 100%;
+          height: 5.43rem;
+          background-color: #fff;
+          border-radius: 0.1rem;
+          box-shadow: 0 0 8px 2px #d1cfcf;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          img {
+            display: block;
+            width: auto;
+            height: 95%;
+          }
+        }
+
+        .path-list {
+          width: 100%;
+          height: 4.54rem;
+          background-color: #fff;
+          border-radius: 0.1rem;
+          box-shadow: 0 0 8px 2px #d1cfcf;
+          font-size: 0.27rem;
+          padding: 0.45rem 0.35rem;
+          overflow: scroll;
+
+          .list-box {
+            .path-line {
+              display: flex;
+              width: 100%;
+              justify-content: space-between;
+              align-items: center;
+              text-align: center;
+
+              .icon {
+                img {
+                  width: 0.28rem;
+                  height: 0.28rem;
+                }
+              }
+              .date {
+                width: 25%;
+              }
+              .pos {
+                width: 35%;
+              }
+              .detail-form {
+                color: #FF9018;
+                text-decoration: underline;
+              }
+            }
+
+            .dashed {
+              border-left: 1px dashed #12B2A8;
+              height: 0.44rem;
+              margin-left: 0.13rem;
+            }
+
+            &:last-child {
+              .dashed {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .form-detail {
+      width: 11rem;
+      height: 10.5rem;
+      position: absolute;
+      right: 0.88rem;
+      top: 0.52rem;
+      border-radius: 0.1rem;
+      box-shadow: 0 0 8px 2px #d1cfcf;
+      background-color: #fff;
+      padding: 0.47rem 0.52rem;
+
+      .title {
+        font-size: 0.27rem;
+        padding-bottom: 0.24rem;
+        text-align: right;
+        border-bottom: 1px solid rgba($color: #808080, $alpha: 0.5);
+      }
+
+      .close-button {
+        position: absolute;
+        top: 1.23rem;
+        left: 0;
+        transform: translateX(-50%);
+
+        img {
+          width: 0.9rem;
+          height: 0.9rem;
+          display: block;
+        }
+      }
+    }
+  }
 
   .box {
     width: 16rem;
