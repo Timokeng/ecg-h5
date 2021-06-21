@@ -603,6 +603,10 @@ export default {
     width: 100%;
     height: 11.85rem;
     padding-right: 0.28rem;
+
+    .anchorBL {
+      display: none !important;
+    }
   }
 
   .user-info-box {
